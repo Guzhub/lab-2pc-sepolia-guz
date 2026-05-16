@@ -1,33 +1,12 @@
-const net = require("net");
+// Banco A — remetente da transferência.
+// Política de voto: só aceita se tiver saldo suficiente.
 
-let balance = 100;
+const { startParticipant } = require("./participant");
 
-const server = net.createServer((socket) => {
-  socket.on("data", (data) => {
-    const msg = JSON.parse(data.toString());
-
-    if (msg.type === "PREPARE") {
-      console.log("[Banco A] PREPARE recebido");
-      if (balance >= msg.amount) {
-        socket.write(JSON.stringify({ vote: "YES" }));
-      } else {
-        socket.write(JSON.stringify({ vote: "NO" }));
-      }
-    }
-
-    if (msg.type === "COMMIT") {
-      balance -= msg.amount;
-      console.log(`[Banco A] COMMIT. Novo saldo: ${balance}`);
-      socket.write(JSON.stringify({ status: "OK" }));
-    }
-
-    if (msg.type === "ABORT") {
-      console.log("[Banco A] ABORT. Nenhuma alteração feita.");
-      socket.write(JSON.stringify({ status: "OK" }));
-    }
-  });
-});
-
-server.listen(5001, () => {
-  console.log("[Banco A] Escutando na porta 5001");
+startParticipant({
+  name: "Banco A",
+  port: 5001,
+  initialBalance: 100,
+  canAccept: (amount, balance) => balance >= amount,
+  applyCommit: (amount, balance) => balance - amount, // debita
 });
