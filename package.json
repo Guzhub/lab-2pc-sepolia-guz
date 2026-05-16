@@ -1,17 +1,19 @@
 {
   "name": "lab-2pc-foundry",
-  "version": "1.0.0",
-  "description": "**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**",
-  "main": "index.js",
-  "directories": {
-    "lib": "lib",
-    "test": "test"
-  },
+  "version": "2.0.0",
+  "description": "2PC + Sepolia: lab base do prof estendido com campo amount on-chain e crash-recovery do coordenador via blockchain.",
+  "main": "coordinator.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "deploy": "node scripts/deploy.js",
+    "bank:a": "node bankA.js",
+    "bank:b": "node bankB.js",
+    "scenario:happy": "node coordinator.js --scenario=happy --slow=1200",
+    "scenario:abort": "node coordinator.js --scenario=abort --slow=1200",
+    "scenario:crash": "node coordinator.js --scenario=crash --slow=1200",
+    "audit": "node audit.js"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["2pc", "two-phase-commit", "sepolia", "foundry", "blockchain"],
+  "author": "Gustavo Baracioli",
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
