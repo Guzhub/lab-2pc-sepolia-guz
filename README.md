@@ -16,7 +16,7 @@ git diff v1-prof-original..main
 
 | # | Item | Por quê |
 |---|---|---|
-| 1 | Campo `amount` no `CommitLog.sol` (struct + event + função) | Pedido explícito do enunciado de revisão. Habilita também a recuperação local do valor durante crash-recovery. |
+| 1 | Campo `amount` no `CommitLog.sol` (struct + event + função) | Habilita a recuperação local do valor durante crash-recovery. |
 | 2 | **Crash-recovery do coordenador via blockchain** | Ataca o problema clássico do 2PC bloqueante. Sem isso, os bancos travam quando o coordenador morre. |
 | 3 | Cenários como flag (`--scenario=happy\|abort\|crash`) | Substitui "edita `amount=150` no código pra testar ABORT". |
 | 4 | `scripts/deploy.js` | Faz `forge script` e atualiza `CONTRACT_ADDRESS` no `.env` automaticamente. |
